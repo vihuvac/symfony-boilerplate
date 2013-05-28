@@ -1,0 +1,11 @@
+<%
+php_extension_dir = %x[php -i 2> /dev/null | grep "^extension_dir" | awk '{print $3}']
+php_extension_dir = php_extension_dir.gsub(/\r/,"").gsub(/\n/,"").strip
+%>
+zend_extension = <%= php_extension_dir %>/xdebug.so
+
+xdebug.var_display_max_depth = 100
+xdebug.dump_globals = 1
+xdebug.remote_enable = 1
+xdebug.remote_host = <%= xdebug_remotehost %>
+xdebug.dump_once = 1

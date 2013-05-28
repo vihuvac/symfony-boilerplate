@@ -1,0 +1,41 @@
+# File is managed by Puppet
+
+[alias]
+latest = log --limit 5
+
+
+[diff]
+# Ignore white space when comparing lines
+ignorews = TRUE
+
+# Ignore white space when comparing lines
+ignorewsamount = TRUE
+
+# Ignore changes whose lines are all blank
+ignoreblanklines = TRUE
+
+# Use git extended diff format
+git = TRUE
+
+
+[ui]
+username = <%= username %>
+askusername = False
+debug = False
+quiet = False
+verbose = False
+
+
+[extensions]
+fetch =
+
+
+<% if !(auth_groups.empty?) %>
+[auth]
+<% auth_groups.each do |g| -%>
+<%= g['group'] %>.prefix = <%= g['prefix'] %>
+<%= g['group'] %>.username = <%= g['username'] %>
+<%= g['group'] %>.password = <%= g['password'] %>
+<%= g['group'] %>.schemes = <%= g['schemes'] %>
+<% end -%>
+<% end %>

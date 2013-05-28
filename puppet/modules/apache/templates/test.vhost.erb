@@ -1,0 +1,14 @@
+#
+# Test vhost
+#
+NameVirtualHost *:80
+<VirtualHost *:80>
+  ServerName <%= name %>
+  DocumentRoot <%= docroot %>
+  <Directory <%= docroot %>> 
+    Options -Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    allow from all
+  </Directory>
+</VirtualHost>

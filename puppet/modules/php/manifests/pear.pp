@@ -18,4 +18,10 @@ class php::pear inherits php::params {
     command => "pear config-set auto_discover 1",
     require => [Package['pear'], Exec['pear_upgrade']],
   }
+
+  exec { "phpunit":
+    command => "sudo pear install pear.phpunit.de/PHPUnit-3.5.11",
+    unless  => "pear list -c phpunit | grep 'PHPUnit'",
+    require => Exec['pear_auto_discover'],
+  }
 }

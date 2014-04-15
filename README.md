@@ -97,6 +97,10 @@ Setup :
 
 * Run ```composer install``` to install the vendors. You can install more vendors if you want, if you do it! You should run ```composer update``` in order to update them.
 
-* Run the required ```app/console``` commands: ```app/console assets:install web --symlink; app/console assetic:dump```.
+* Run the required ```app/console``` commands:
+
+    ```app/console assets:install --symlink web```
+
+    ```app/console assetic:dump```
 
 #### You're done!

@@ -49,19 +49,19 @@ assetic:
             output: css/bootstrap.css
         bootstrap_js:
             inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-transition.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-affix.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-alert.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-button.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-carousel.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-collapse.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-dropdown.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-transition.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-modal.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-tooltip.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-popover.js
+                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-tooltip.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-scrollspy.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-tab.js
                 - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-typeahead.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-affix.js
             output: js/bootstrap.js
         jquery:
             inputs:
@@ -105,6 +105,7 @@ jms_di_extra:
         method_calls:
             setRouter: ["@router"]
 
+# Sonata Block Configuration
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -114,12 +115,12 @@ sonata_block:
         sonata.block.service.text:
         sonata.block.service.rss:
 
-# app/config/config.yml
+# Sonata User Configuration
 sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
 
-
+# FOS User Configuration
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
@@ -128,10 +129,12 @@ fos_user:
     group:
         group_class: Application\Sonata\UserBundle\Entity\Group
 
+# KNP Menu Configuration
 knp_menu:
    twig:
        template: "BcBootstrapBundle:Menu:menu.html.twig"
 
+# Sonata Intl Configuration
 sonata_intl:
     timezone:
         default: America/New_York

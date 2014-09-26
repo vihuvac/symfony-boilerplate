@@ -1,0 +1,45 @@
+sonata_admin:
+    # Default value, change it to sonata.admin.security.handler.acl to use ACL
+    security:
+        handler: sonata.admin.security.handler.acl
+
+        # acl security information
+        information:
+            GUEST:    [VIEW, LIST]
+            STAFF:    [EDIT, LIST, CREATE]
+            EDITOR:   [OPERATOR, EXPORT]
+            ADMIN:    [MASTER]
+        # permissions not related to an object instance and also to be available when objects do not exist
+        # the DELETE admin permission means the user is allowed to batch delete objects
+        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+        # permission related to the objects
+        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+
+    title:      Sonata Admin
+    title_logo: bundles/sonataadmin/logo_title.png
+    options:
+        html5_validate: false # does not use html5 validation
+        pager_links: 5 # pager max links to display
+
+    templates:
+        # Default Global Templates:
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # Default value if done set, actions templates, should extends a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+    assets:
+        stylesheets:
+            # The boilerplate project includes default pre-optimized version of some css and js
+            # So you can either use them, and add your custom assets here
+            #   ~ or ~
+            # tweak the assetic.yml and the following lines
+            - css/sonata_admin.min.css
+            - css/sonata_jqueryui.min.css
+
+        javascripts:
+            - js/sonata_admin.min.js
+            - js/sonata_jqueryui.min.js

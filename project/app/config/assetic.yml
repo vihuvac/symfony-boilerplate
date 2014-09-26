@@ -1,0 +1,113 @@
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        []
+    filters:
+        cssrewrite: ~
+        less:
+            node:       /usr/local/bin/node
+            node_paths: [/usr/local/lib/node_modules]
+            apply_to:   "\.less$"
+        yui_css:
+            jar: "%kernel.root_dir%/../web/resources/java/yuicompressor-2.4.7.jar"
+        yui_js:
+            jar: "%kernel.root_dir%/../web/resources/java/yuicompressor-2.4.7.jar"
+
+    assets:
+        # Bootstrap Assets
+        bootstrap_css:
+            inputs:
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less
+            filters:
+                - less
+                - cssrewrite
+                - yui_css
+            output: css/bootstrap.min.css
+
+        bootstrap_js:
+            inputs:
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/alert.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/button.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/carousel.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/collapse.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/dropdown.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/modal.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tooltip.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/popover.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/scrollspy.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/js/affix.js
+            filters:
+                - yui_js
+            output: js/bootstrap.min.js
+
+        # JQuery Assets
+        jquery:
+            inputs:
+                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.10.2.js
+            filters:
+                - yui_js
+            output: js/jquery.min.js
+
+        # Sonata Admin Assets
+        sonata_admin_css:
+            inputs:
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/bootstrap/dist/css/bootstrap.min.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/AdminLTE/css/font-awesome.min.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/AdminLTE/css/ionicons.min.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/AdminLTE/css/AdminLTE.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/themes/flick/jquery-ui.min.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/select2/select2.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/select2/select2-bootstrap.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css
+                - %kernel.root_dir%/../web/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/css/styles.css
+                - %kernel.root_dir%/../web/bundles/sonataadmin/css/layout.css
+            filters:
+                - cssrewrite
+                - yui_css
+            output: css/sonata_admin.min.css
+
+        sonata_admin_js:
+            inputs:
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jquery/dist/jquery.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.js
+                - %kernel.root_dir%/../web/bundles/sonatacore/vendor/moment/min/moment.min.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/bootstrap/dist/js/bootstrap.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js
+                - %kernel.root_dir%/../web/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/select2/select2.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/jquery/jquery.form.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/jquery/jquery.confirmExit.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/App.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/Admin.js
+            filters:
+                - yui_js
+            output: js/sonata_admin.min.js
+
+        # Sonata JQuery Assets
+        sonata_jqueryui_css:
+            inputs:
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/themes/flick/jquery-ui.css
+            filters:
+                - cssrewrite
+                - yui_css
+            output: css/sonata_jqueryui.min.css
+
+        sonata_jqueryui_js:
+            inputs:
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.core.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.widget.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.mouse.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.draggable.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.droppable.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.resizable.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.selectable.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.sortable.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.effect.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.position.js
+                - %kernel.root_dir%/../web/bundles/sonataadmin/vendor/jqueryui/ui/jquery.ui.tooltip.js
+            filters:
+                - yui_js
+            output: js/sonata_jqueryui.min.js

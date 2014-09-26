@@ -26,6 +26,7 @@ framework:
     trusted_proxies: ~
     session:         ~
     fragments:       ~
+    http_method_override: true
 
 # Twig Configuration
 twig:
@@ -33,7 +34,7 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - "BraincraftedBootstrapBundle:Form:bootstrap.html.twig"
+            - "SonataCoreBundle:Form:datepicker.html.twig"
 
 # Doctrine Configuration
 doctrine:

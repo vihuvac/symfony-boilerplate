@@ -46,11 +46,11 @@ class AppKernel extends Kernel
             // Sonata Bundles
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\UserBundle\SonataUserBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
+            new Sonata\UserBundle\SonataUserBundle(),
 
             // Sonata Application Bundles
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),

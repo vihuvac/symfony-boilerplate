@@ -13,3 +13,6 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    sonata_admin.title:         Dashboard
+    sonata_admin.logo_title:    bundles/sonataadmin/logo_title.png

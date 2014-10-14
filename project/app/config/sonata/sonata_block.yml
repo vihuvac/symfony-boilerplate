@@ -1,0 +1,17 @@
+sonata_block:
+    default_contexts: [cms]
+
+    http_cache:
+        listener: true
+
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.admin.block.search_result:
+            contexts:   [admin]
+
+        # Builtin Block
+        sonata.block.service.container:
+        sonata.block.service.template:
+        sonata.block.service.text:
+        sonata.block.service.rss:

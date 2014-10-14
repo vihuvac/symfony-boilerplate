@@ -67,8 +67,8 @@ What's inside?
 
 ### Twitter & Jquery Bundles
 
-* Bootstrap (2.3.*)
-* Jquery (1.9.*)
+* Bootstrap (~3.1)
+* Jquery (1.10.2)
 
 Setup :
 -------
@@ -81,7 +81,11 @@ Setup :
 
 * Create the file ```git_config.pp``` in the ```puppet/manifests/``` directory. You can use ```puppet/manifests/git_config.pp.dist``` as reference.
 
-* Change the origin repo to the new repository in order to push your new project ```git remote remove origin; git remote add origin [NEW-GIT-REMOTE]```.
+* Change the origin repo to the new repository in order to push your new project
+
+    ```git remote remove origin```
+
+    ```git remote add origin [NEW-GIT-REMOTE]```
 
 * Change the ```README.md``` file with instructions on how to setup that project.
 
@@ -91,7 +95,7 @@ Setup :
 
 * Login to the virtual machine ```vagrant ssh``` from the root of this repo.
 
-* Go to ``` /vagrant/project``` directory.
+* Go to ```/vagrant/project``` directory.
 
 * Configure your ```parameters.yml``` file. You can use ```app/config/parameters.yml.dist``` as reference.
 

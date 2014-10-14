@@ -1,6 +1,13 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: assetic.yml }
+
+    # Sonata Bundles
+    - { resource: sonata/sonata_admin.yml }
+    - { resource: sonata/sonata_block.yml }
+    - { resource: sonata/sonata_intl.yml }
+    - { resource: sonata/sonata_user.yml }
 
 framework:
     #esi:             ~
@@ -13,12 +20,13 @@ framework:
     csrf_protection: ~
     validation:      { enable_annotations: true }
     templating:
-        engines: ['twig']
+        engines: ["twig"]
         #assets_version: SomeVer sionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
     session:         ~
     fragments:       ~
+    http_method_override: true
 
 # Twig Configuration
 twig:
@@ -26,47 +34,7 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - "BcBootstrapBundle:Form:form_div_layout.html.twig"
-# Assetic Configuration
-assetic:
-    debug:          %kernel.debug%
-    use_controller: false
-    bundles:        [ ]
-    filters:
-        less:
-            node:       /usr/local/bin/node
-            node_paths: [/usr/local/lib/node_modules]
-            apply_to:   "\.less$"
-        cssrewrite: ~
-    assets:
-        bootstrap_css:
-            inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/bootstrap.less
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/less/responsive.less
-            filters:
-                - less
-                - cssrewrite
-            output: css/bootstrap.css
-        bootstrap_js:
-            inputs:
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-affix.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-alert.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-button.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-carousel.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-collapse.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-dropdown.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-transition.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-modal.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-popover.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-tooltip.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-scrollspy.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-tab.js
-                - %kernel.root_dir%/../vendor/twitter/bootstrap/js/bootstrap-typeahead.js
-            output: js/bootstrap.js
-        jquery:
-            inputs:
-                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.9.1.js
-            output: js/jquery.js
+            - "SonataCoreBundle:Form:datepicker.html.twig"
 
 # Doctrine Configuration
 doctrine:
@@ -93,6 +61,7 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
+# JMS Configuration
 jms_di_extra:
     locations:
         all_bundles: false
@@ -105,20 +74,17 @@ jms_di_extra:
         method_calls:
             setRouter: ["@router"]
 
-# Sonata Block Configuration
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
 
-        sonata.block.service.text:
-        sonata.block.service.rss:
-
-# Sonata User Configuration
-sonata_user:
-    security_acl: true
-    manager_type: orm # can be orm or mongodb
+# Braincrafted Configuration
+braincrafted_bootstrap:
+    auto_configure:
+        assetic: false
+        twig: false
+        knp_menu: false
+        knp_paginator: false
 
 # FOS User Configuration
 fos_user:
@@ -129,12 +95,11 @@ fos_user:
     group:
         group_class: Application\Sonata\UserBundle\Entity\Group
 
-# KNP Menu Configuration
+# KNP Configuration
 knp_menu:
    twig:
-       template: "BcBootstrapBundle:Menu:menu.html.twig"
+       template: "BraincraftedBootstrapBundle:Menu:bootstrap.html.twig"
 
-# Sonata Intl Configuration
-sonata_intl:
-    timezone:
-        default: America/New_York
+knp_paginator:
+    template:
+        pagination: "BraincraftedBootstrapBundle:Pagination:bootstrap.html.twig"

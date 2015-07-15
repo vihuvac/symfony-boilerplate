@@ -45,7 +45,7 @@ assetic:
         # JQuery Assets
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.10.2.js
+                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.2.js
             filters:
                 - yui_js
             output: js/jquery.min.js

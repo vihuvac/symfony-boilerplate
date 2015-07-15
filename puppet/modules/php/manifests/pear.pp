@@ -19,9 +19,10 @@ class php::pear inherits php::params {
     require => [Package['pear'], Exec['pear_upgrade']],
   }
 
-  exec { "phpunit":
-    command => "sudo pear install pear.phpunit.de/PHPUnit-3.5.11",
-    unless  => "pear list -c phpunit | grep 'PHPUnit'",
-    require => Exec['pear_auto_discover'],
-  }
+    # Moved to its own module (phpunit directory) because the installation through pear is deprecated!
+    #exec { "phpunit" :
+    #    command => "sudo pear install pear.phpunit.de/PHPUnit",
+    #    require => Exec["pear_auto_discover"],
+    #    unless  => "pear list -c phpunit | grep 'PHPUnit'",
+    #}
 }

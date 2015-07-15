@@ -1,24 +1,40 @@
 node "default" {
 
-    Exec {
-        path => ["/usr/local/bin", "/opt/local/bin", "/usr/bin", "/usr/sbin", "/bin", "/sbin"]
-    }
-
-    # this makes puppet and vagrant shut up about the puppet group
-    group {
-        "puppet" : ensure => "present"
-    }
+    # Importing git credentials
+    import "git_config.pp"
 
     # Dotdeb repository
     include dotdeb
 
-    #repos configuration
+    # Repos configuration
     include repos
 
     # NFS
     include nfsclient
 
-    # APACHE
+    # Bash aliases
+    include other
+
+    # Fish shell
+    include fish
+
+    # Vim editor
+    include vim
+
+    # PHPUnit
+    include phpunit
+
+
+    Exec {
+        path => ["/usr/local/bin", "/opt/local/bin", "/usr/bin", "/usr/sbin", "/bin", "/sbin"]
+    }
+
+    # This makes puppet and vagrant shut up about the puppet group
+    group {
+        "puppet" : ensure => "present"
+    }
+
+    # Apache
     class {
         "apache" :
             httpd_user  => "vagrant",
@@ -46,8 +62,7 @@ node "default" {
         "nodejs" : version => "stable"
     }
 
-
-    # Ensure php cli & apache
+    # Ensure PHP Cli & Apache
     class { "php" : }
     class {
         "php::apache2" :
@@ -63,7 +78,6 @@ node "default" {
     }
 
     class { "memcached" : }
-    include other
 
     class {
         "composer" :
@@ -73,14 +87,11 @@ node "default" {
             logoutput       => false
     }
 
-
     apache::vhost {
         $fqdn :
             port               => "80",
             docroot            => "/vagrant/project/web",
             serveradmin        => "admin@domain.dev",
-            configure_firewall => false,
+            configure_firewall => false
     }
-
-    import "git_config.pp"
 }

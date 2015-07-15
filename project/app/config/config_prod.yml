@@ -1,21 +1,21 @@
 imports:
     - { resource: config.yml }
 
-# In production environment you should know that the parameters for URL generation
-# always pass the requirements. Otherwise it would break your link (or even site with
-# strict_requirements = true). So we can disable the requirements check completely for
-# enhanced performance with strict_requirements = null.
-framework:
-    router:
-        strict_requirements: null
-    #validation:
-    #    cache: apc
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                metadata_cache_driver: apc
+                query_cache_driver: apc
+                result_cache_driver: apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+framework:
+    templating:
+        engines: ["twig"]
+        assets_version_format: "static-%%2$s/%%1$s"
+
+    validation:
+        cache: apc
 
 monolog:
     handlers:

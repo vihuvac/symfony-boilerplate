@@ -1,3 +1,29 @@
 sonata_user:
-    security_acl: true
-    manager_type: orm # can be orm or mongodb
+    security_acl:             true
+    table:
+        user_group:           fos_user_user_group
+
+    impersonating:
+        route:                sonata_user_profile_show
+        parameters:           { path: / }
+
+    google_authenticator:
+        enabled:              true
+        server:               %sonata_user.google_authenticator.server%
+
+    manager_type:             orm
+
+    profile:
+        dashboard:
+            blocks:
+                - { position: left, type: sonata.block.service.text, settings: { content: "<h2>Welcome!</h2> <p>The system is under heavy development. If you find any problems, please report them through the official issues system clicking on the footer button. Thanks beforehand!</p>" }}
+        menu:
+            - { route: "sonata_user_profile_show", label: "sonata_profile_title", domain: "SonataUserBundle" }
+            - { route: "sonata_user_profile_edit", label: "link_edit_profile", domain: "SonataUserBundle" }
+        form:
+            type:                 sonata_user_profile
+            handler:              sonata.user.profile.form.handler.default
+            name:                 sonata_user_profile_form
+            validation_groups:
+                - Profile
+                - Default

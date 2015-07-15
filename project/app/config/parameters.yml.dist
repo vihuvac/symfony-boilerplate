@@ -7,12 +7,18 @@ parameters:
     database_password: database_password
 
     mailer_transport:  smtp
-    mailer_host:       127.0.0.1
+    mailer_host:       smtp.gmail.com
+    mailer_encryption: ssl
+    mailer_port:       465
     mailer_user:       ~
     mailer_password:   ~
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
+    # Sonata Admin Options
     sonata_admin.title:         Dashboard
     sonata_admin.logo_title:    bundles/sonataadmin/logo_title.png
+
+    # Sonata User Options
+    sonata_user.google_authenticator.server:  hostname # Replace the domain for a real one!

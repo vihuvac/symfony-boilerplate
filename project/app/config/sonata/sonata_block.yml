@@ -5,6 +5,8 @@ sonata_block:
         listener: true
 
     blocks:
+        sonata.admin.block.stats:
+            contexts:   [admin]
         sonata.admin.block.admin_list:
             contexts:   [admin]
         sonata.admin.block.search_result:
@@ -15,3 +17,7 @@ sonata_block:
         sonata.block.service.template:
         sonata.block.service.text:
         sonata.block.service.rss:
+
+        # UserBundle's Blocks
+        sonata.user.block.menu:
+            contexts: [user]

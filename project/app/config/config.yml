@@ -3,9 +3,19 @@ imports:
     - { resource: security.yml }
     - { resource: assetic.yml }
 
+    # Frontend Settings
+    - { resource: settings/braincrafted_bootstrap.yml }
+
+    # FOS Bundles
+    - { resource: fos/fos_user.yml }
+
+    # Knp Configurations
+    - { resource: knp/knp_configs.yml }
+
     # Sonata Bundles
     - { resource: sonata/sonata_admin.yml }
     - { resource: sonata/sonata_block.yml }
+    - { resource: sonata/sonata_cache.yml }
     - { resource: sonata/sonata_intl.yml }
     - { resource: sonata/sonata_user.yml }
 
@@ -32,6 +42,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+
+    base_template_class: Sonata\CacheBundle\Twig\TwigTemplate14
+
     form:
         resources:
             - "SonataCoreBundle:Form:datepicker.html.twig"
@@ -51,14 +64,21 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
+        default_entity_manager: default
+
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings: ~
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
+    transport:  "%mailer_transport%"
+    host:       "%mailer_host%"
+    encryption: "%mailer_encryption%"
+    port:       "%mailer_port%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
     spool:     { type: memory }
 
 # JMS Configuration
@@ -77,29 +97,3 @@ jms_di_extra:
 jms_security_extra:
     secure_all_services: false
     expressions: true
-
-# Braincrafted Configuration
-braincrafted_bootstrap:
-    auto_configure:
-        assetic: false
-        twig: false
-        knp_menu: false
-        knp_paginator: false
-
-# FOS User Configuration
-fos_user:
-    db_driver:      orm # can be orm or odm
-    firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
-
-    group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
-
-# KNP Configuration
-knp_menu:
-   twig:
-       template: "BraincraftedBootstrapBundle:Menu:bootstrap.html.twig"
-
-knp_paginator:
-    template:
-        pagination: "BraincraftedBootstrapBundle:Pagination:bootstrap.html.twig"

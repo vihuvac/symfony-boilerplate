@@ -1,30 +1,42 @@
-security:
-    acl:
-        connection: default
+parameters:
+    security.acl.permission.map.class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
 
+security:
     encoders:
-        Application\Sonata\UserBundle\Entity\User:
-            algorithm: bcrypt
-            cost: 5
+        "Application\Sonata\UserBundle\Entity\User":
+            algorithm: sha512
+            encode_as_base64: false
+            iterations: 1
+
+        "Symfony\Component\Security\Core\User\User": plaintext
 
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    acl:
+        connection: default
 
     providers:
         fos_userbundle:
             id: fos_user.user_manager
 
+        in_memory:
+            memory:
+                users:
+                    admin: { password: admin, roles: "ROLE_ADMIN" }
+
     firewalls:
+        # -> Disabling the security for the web debug toolbar, the profiler and assetic.
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # -> custom firewall for the admin area of the URL
+        # -> Custom firewall configuration for the admin area
         admin:
             switch_user:        true
             context:            user
-            pattern:            /admin(.*)
+            pattern:            ^/(.*)
             form_login:
                 provider:       fos_userbundle
                 login_path:     /admin/login
@@ -34,16 +46,14 @@ security:
                 use_referer:    true
             logout:
                 path:           /admin/logout
-                target:         /admin/login
+                target:         /admin/login # May be replaced by the index path like: website_default_index
+            anonymous:          true
 
-            anonymous:    true
-        # -> end custom configuration
-
-        # defaut login area for standard users
+        # -> Defaut login area for standard users
         main:
             switch_user:        true
             context:            user
-            pattern:            .*
+            pattern:            ^/(.*)
             form_login:
                 provider:       fos_userbundle
                 login_path:     /login
@@ -52,26 +62,25 @@ security:
                 failure_path:   null
             logout:             true
             anonymous:          true
-
+            remember_me:
+                key:            "+hyho+oqry3^^n!g8(n@!(lf_%^^q34098wj_5l*7dqvvah4jp"
+                lifetime:       172800
+                path:           /
+                domain:         ~
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        # -> custom access control for the admin area of the URL
+        # Admin login page needs to be access without credential
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login-check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        # -> end
-
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
-        - { path: ^/.*, role: [ROLE_USER] }
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

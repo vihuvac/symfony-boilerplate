@@ -33,10 +33,10 @@ class nodejs ( $version, $logoutput = 'on_failure' ) {
     unless      => "test \"v$version\" = \"\$(node -v)\"",
   }
 
-  exec { 'less' :
-    command     => 'npm install -g less',
-    path        => [ "/usr/local/bin", "/bin" , "/usr/bin" ],
-    require     => Exec['nave'],
-    unless      => 'npm list -p -l -g | grep less',
-  }
+    exec { "less" :
+        command     => "npm install -g less",
+        require     => [ Exec["nave"] ],
+        logoutput   => $logoutput,
+        unless      => "npm list -p -l -g | grep less",
+    }
 }

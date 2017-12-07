@@ -1,0 +1,25 @@
+---
+- name: installing apache2
+  become: yes
+  apt: pkg=apache2 state=latest
+
+- name: installing apache2 utils
+  become: yes
+  apt: pkg=apache2-utils state=latest
+
+- name: updating the default apache2 virtual host
+  become: yes
+  template: src={{ template }} dest={{ vhost_path }}/{{ vhost_file }}
+  notify: restart apache2
+
+- name: enabling module rewrite
+  apache2_module: state=present name=rewrite
+  notify: restart apache2
+
+- name: setting a default server name for apache2
+  shell: echo ServerName {{ custom_hostname }} > /etc/apache2/conf-available/servername.conf
+  when: hostname is defined
+
+- name: enabling the default server name created for apache2
+  shell: a2enconf servername
+  when: hostname is defined

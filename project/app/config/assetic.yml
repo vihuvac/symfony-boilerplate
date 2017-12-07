@@ -1,29 +1,20 @@
 assetic:
-    debug:          %kernel.debug%
+    debug:          "%kernel.debug%"
     use_controller: false
     bundles:        []
     filters:
         cssrewrite: ~
         less:
-            node:       /usr/local/bin/node
-            node_paths: [/usr/local/lib/node_modules]
-            apply_to:   "\.less$"
-        yui_css:
-            jar: "%kernel.root_dir%/../web/resources/java/yuicompressor-2.4.7.jar"
-        yui_js:
-            jar: "%kernel.root_dir%/../web/resources/java/yuicompressor-2.4.7.jar"
+            node: "%node.path%"
+            node_paths: ["%node.modules%"]
+            apply_to: "\\.less$"
+        uglifyjs2:
+            bin: "%uglify.js%"
+        uglifycss:
+            bin: "%uglify.css%"
 
     assets:
         # Bootstrap Assets
-        bootstrap_css:
-            inputs:
-                - %kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less
-            filters:
-                - less
-                - cssrewrite
-                - yui_css
-            output: css/bootstrap.min.css
-
         bootstrap_js:
             inputs:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/transition.js
@@ -39,13 +30,22 @@ assetic:
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/tab.js
                 - %kernel.root_dir%/../vendor/twbs/bootstrap/js/affix.js
             filters:
-                - yui_js
+                - uglifyjs2
             output: js/bootstrap.min.js
+
+        bootstrap_css:
+            inputs:
+                - %kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less
+            filters:
+                - less
+                - cssrewrite
+                - uglifycss
+            output: css/bootstrap.min.css
 
         # JQuery Assets
         jquery:
             inputs:
-                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.2.js
+                - %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.12.4.js
             filters:
-                - yui_js
+                - uglifyjs2
             output: js/jquery.min.js

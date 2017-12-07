@@ -1,7 +1,10 @@
+*.php~
 *.DS_Store
+
+.idea*
+.idea
+
 .vagrant*
 .vagrant
 
 project/*.log
-puppet/manifests/git_config.pp
-puppet/*.DS_Store

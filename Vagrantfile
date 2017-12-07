@@ -1,33 +1,36 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-# sublime: x_syntax Packages/Ruby/Ruby.tmLanguage
+Vagrant.require_version ">= 1.5"
 
 Vagrant.configure("2") do |config|
-    config.vm.box = "debian64_puppet31"
-    config.vm.box_url = "http://www.harrenmediatools.com/utils/debian64_puppet31.box"
+    # Box Source
+    config.vm.box = "ubuntu/trusty64"
 
     # Internal Network
-    config.vm.network :private_network, ip: "192.168.33.10"
-    config.vm.hostname = "symfony.boilerplate.dev"
-    config.vm.synced_folder ".", "/vagrant", :nfs => true
+    config.vm.network :private_network, ip: "192.168.33.11"
+    config.vm.network :forwarded_port, guest: 80, host: 1116
 
-    # VM Settings
-    config.vm.network :forwarded_port, guest: 80, host: 8080
+    # SSH Connection
+    config.ssh.forward_agent = true
 
-    config.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--usb", "off"]
-        vb.customize ["modifyvm", :id, "--usbehci", "off"]
-        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-        vb.customize ["modifyvm", :id, "--memory", 1024]
-        vb.customize ["modifyvm", :id, "--vram", 5]
-        vb.customize ["modifyvm", :id, "--name", "Symfony Boilerplate"]
+    # Configure the VM
+    config.vm.provider :virtualbox do |v|
+        v.name = "symfony-boilerplate"
+        v.customize [
+            "modifyvm", :id,
+            "--cpus", 2,
+            "--memory", 2048,
+            "--name", "symfony-boilerplate",
+            "--natdnshostresolver1", "on",
+            "--natdnsproxy1", "on",
+            "--usb", "off",
+            "--usbehci", "off",
+            "--vram", 5,
+        ]
     end
 
-    config.vm.provision :puppet do |puppet|
-        puppet.facter         = { "fqdn" => config.vm.hostname }
-        puppet.manifest_file  = "default.pp"
-        puppet.manifests_path = "puppet/manifests"
-        puppet.module_path    = "puppet/modules"
-    end
+    # Handle synchronized folders
+    config.vm.synced_folder ".", "/vagrant", :nfs => true, :mount_options => ["nolock,vers=3,tcp"]
+
+    # Install Ansible and provision the VM
+    config.vm.provision "shell", :inline => "/vagrant/.ansible/install_requirements.sh"
+    config.vm.provision "shell", :inline => "/vagrant/.ansible/install_data.sh"
 end

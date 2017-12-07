@@ -1,0 +1,3 @@
+knp_paginator:
+    template:
+        pagination: "BraincraftedBootstrapBundle:Pagination:bootstrap.html.twig"

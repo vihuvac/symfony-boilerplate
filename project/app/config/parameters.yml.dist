@@ -5,6 +5,7 @@ parameters:
     database_name:     database_name
     database_user:     database_user
     database_password: database_password
+    database_server_version: 5.6
 
     mailer_transport:  smtp
     mailer_host:       smtp.gmail.com
@@ -12,13 +13,23 @@ parameters:
     mailer_port:       465
     mailer_user:       ~
     mailer_password:   ~
+    mailer_alias:      ~
 
+    locales:           en|es
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     # Sonata Admin Options
-    sonata_admin.title:         Dashboard
-    sonata_admin.logo_title:    bundles/sonataadmin/logo_title.png
+    sonata_admin.title:      Dashboard
+    sonata_admin.logo_title: bundles/sonataadmin/logo_title.png
 
     # Sonata User Options
-    sonata_user.google_authenticator.server:  hostname # Replace the domain for a real one!
+    sonata_user.google_authenticator.server: hostname # Replace the domain for a real one!
+
+    # Node (Paths based on Ubuntu 14.04 LTS Server)
+    node.path:    /usr/bin/node
+    node.modules: /usr/lib/node_modules/
+
+    # Uglify (Paths based on Ubuntu 14.04 LTS Server)
+    uglify.js:  /usr/bin/uglifyjs
+    uglify.css: /usr/bin/uglifycss

@@ -1,0 +1,44 @@
+---
+- name: update apt
+  become: yes
+  apt: update_cache=yes
+
+- name: install system packages
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - curl
+    - wget
+    - python-software-properties
+
+- name: add ppa repository
+  become: yes
+  apt_repository: repo=ppa:{{ php_ppa }}
+
+- name: update apt
+  become: yes
+  apt: update_cache=yes
+
+- name: install extra packages
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items: "{{ sys_packages }}"
+
+- name: configure the timezone
+  become: yes
+  template: src=timezone.tpl dest=/etc/timezone
+
+- name: more configurations for the timezone
+  become: yes
+  file: src=/usr/share/zoneinfo/{{ timezone }} dest=/etc/localtime state=link force=yes backup=yes
+
+- name: set the hostname in /etc/hostname
+  shell: echo {{ custom_hostname }} > /etc/hostname
+  when: hostname is defined
+
+- name: set the hostname
+  shell: hostname {{ custom_hostname }}
+  when: hostname is defined
+
+- name: update /etc/hosts
+  lineinfile: dest=/etc/hosts regexp="^127\.0\.0\.1" line="127.0.0.1 localhost {{ custom_hostname }}" owner=root group=root mode=0644

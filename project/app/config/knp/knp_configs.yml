@@ -1,7 +1,0 @@
-knp_menu:
-    twig:
-        template: "BraincraftedBootstrapBundle:Menu:bootstrap.html.twig"
-
-knp_paginator:
-    template:
-        pagination: "BraincraftedBootstrapBundle:Pagination:bootstrap.html.twig"

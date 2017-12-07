@@ -1,5 +1,10 @@
 sonata_user:
+    class:
+        user:  Application\Sonata\UserBundle\Entity\User
+        group: Application\Sonata\UserBundle\Entity\Group
+
     security_acl:             true
+
     table:
         user_group:           fos_user_user_group
 
@@ -13,17 +18,29 @@ sonata_user:
 
     manager_type:             orm
 
-    profile:
-        dashboard:
-            blocks:
-                - { position: left, type: sonata.block.service.text, settings: { content: "<h2>Welcome!</h2> <p>The system is under heavy development. If you find any problems, please report them through the official issues system clicking on the footer button. Thanks beforehand!</p>" }}
-        menu:
-            - { route: "sonata_user_profile_show", label: "sonata_profile_title", domain: "SonataUserBundle" }
-            - { route: "sonata_user_profile_edit", label: "link_edit_profile", domain: "SonataUserBundle" }
-        form:
-            type:                 sonata_user_profile
-            handler:              sonata.user.profile.form.handler.default
-            name:                 sonata_user_profile_form
-            validation_groups:
-                - Profile
-                - Default
+    #profile:
+    #    dashboard:
+    #        blocks:
+    #            - { position: left, type: sonata.block.service.text, settings: { content: "<h2>Welcome!</h2> <p>The system is under heavy development. If you find any problems, please report them through the official issues system clicking on the footer button. Thanks beforehand!</p>" }}
+    #    menu:
+    #        - { route: "sonata_user_profile_show", label: "sonata_profile_title", domain: "SonataUserBundle" }
+    #        - { route: "sonata_user_profile_edit", label: "link_edit_profile", domain: "SonataUserBundle" }
+    #    form:
+    #        type:                 sonata_user_profile
+    #        handler:              sonata.user.profile.form.handler.default
+    #        name:                 sonata_user_profile_form
+    #        validation_groups:
+    #            - Profile
+    #            - Default
+
+# Enable Doctrine to map the provided entities
+#
+# More information can be found here: https://sonata-project.org/bundles/user
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    FOSUserBundle: ~
+                    ApplicationSonataUserBundle: ~
+                    SonataUserBundle: ~

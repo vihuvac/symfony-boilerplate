@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  vars:
+    custom_hostname: vagrant-ubuntu-trusty-64
+    php_version: 7.1
+    timezone: America/Argentina/Buenos_Aires
+    xdebug_extension: /usr/lib/php/20160303/xdebug.so
+    xdebug_ide_key: SFBoilerplate
+    xdebug_remote_host: 192.168.33.1
+  vars_files:
+    - vars/apache.yml
+    - vars/common.yml
+    - vars/mysql.yml
+  roles:
+    - init
+    - app
+    - apache
+    - mysql
+    - php-cli
+    - php-fpm
+    - php-common

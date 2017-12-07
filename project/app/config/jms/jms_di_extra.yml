@@ -1,0 +1,13 @@
+jms_di_extra:
+    locations:
+        all_bundles: false
+        directories: ["%kernel.root_dir%/../src"]
+        bundles: ["WebsiteBundle"]
+
+    automatic_controller_injections:
+        properties:
+            request: "@request"
+            router: "@router"
+            em: "@doctrine.orm.default_entity_manager"
+        method_calls:
+            setRouter: ["@router"]

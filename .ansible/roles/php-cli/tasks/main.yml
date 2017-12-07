@@ -1,0 +1,8 @@
+- name: install php{{ php_version }}-cli
+  become: yes
+  apt: pkg=php{{ php_version }}-cli state=latest
+
+- name: ensure timezone is set in cli php.ini
+  lineinfile: dest=/etc/php/{{ php_version }}/cli/php.ini
+              regexp="date.timezone ="
+              line="date.timezone = {{ timezone }}"

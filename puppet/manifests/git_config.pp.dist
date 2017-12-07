@@ -1,6 +1,0 @@
-class {
-    "git" :
-        username        => "",
-        usermail        => "",
-        github_username => "",
-}

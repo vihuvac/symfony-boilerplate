@@ -1,0 +1,22 @@
+---
+- name: install php packages
+  become: yes
+  apt: pkg={{ item }} state=latest
+  with_items: "{{ php_packages }}"
+
+#- name: switch php version from php7.1 to php5.6
+#  shell: sudo a2enmod php5.6 && sudo service apache2 restart && sudo update-alternatives --set php /usr/bin/php5.6
+
+# xdebug is currently installed via php.
+#- name: install xdebug via pecl
+#  shell: pecl install xdebug
+#  notify:
+#    - restart apache2
+#    - restart php{{ php_version }}-fpm
+
+- name: update the default xdebug template
+  become: yes
+  template: src=xdebug.tpl dest=/etc/php/{{ php_version }}/mods-available/xdebug.ini
+  notify:
+    - restart apache2
+    - restart php{{ php_version }}-fpm

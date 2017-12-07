@@ -3,23 +3,23 @@ parameters:
 
 security:
     encoders:
-        "Application\Sonata\UserBundle\Entity\User":
+        Application\Sonata\UserBundle\Entity\User:
             algorithm: sha512
             encode_as_base64: false
             iterations: 1
 
-        "Symfony\Component\Security\Core\User\User": plaintext
+        Symfony\Component\Security\Core\User\User: plaintext
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_SONATA_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     acl:
         connection: default
 
     providers:
         fos_userbundle:
-            id: fos_user.user_manager
+            id: fos_user.user_provider.username
 
         in_memory:
             memory:
@@ -39,14 +39,14 @@ security:
             pattern:            ^/(.*)
             form_login:
                 provider:       fos_userbundle
-                login_path:     /admin/login
+                login_path:     _admin_login
                 use_forward:    false
-                check_path:     /admin/login_check
+                check_path:     _admin_login_check
                 failure_path:   null
                 use_referer:    true
             logout:
-                path:           /admin/logout
-                target:         /admin/login # May be replaced by the index path like: website_default_index
+                path:           _admin_logout
+                target:         _admin_login # May be replaced by the index path, e.g: website_default_index
             anonymous:          true
 
         # -> Defaut login area for standard users
@@ -56,31 +56,24 @@ security:
             pattern:            ^/(.*)
             form_login:
                 provider:       fos_userbundle
-                login_path:     /login
+                login_path:     _admin_login
                 use_forward:    false
-                check_path:     /login_check
+                check_path:     _admin_login_check
                 failure_path:   null
             logout:             true
             anonymous:          true
             remember_me:
-                key:            "+hyho+oqry3^^n!g8(n@!(lf_%^^q34098wj_5l*7dqvvah4jp"
+                secret:         "+hyho+oqry3^^n!g8(n@!(lf_%^^q34098wj_5l*7dqvvah4jp"
                 lifetime:       172800
                 path:           /
                 domain:         ~
 
     access_control:
-        # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # These admin login pages must be available to any user (anonymous role).
+        - { path: ^/(%locales%)/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%locales%)/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(%locales%)/admin/login-check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        # Admin login page needs to be access without credential
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login-check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-        # Secured part of the site
-        # This config requires being logged for the whole site and having the admin role for the admin part.
-        # Change these rules to adapt them to your needs
-        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        # All the routes after /(%locales%)/admin/ must be restricted and allowed to admins only.
+        - { path: ^/(%locales%)/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -1,0 +1,5 @@
+---
+  database_name: symfony_boilerplate
+  database_user: developer
+  database_password: developer
+  database_root_password: root

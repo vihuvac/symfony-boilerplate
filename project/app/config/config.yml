@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: assetic.yml }
+    - { resource: services.yml }
 
     # Frontend Settings
     - { resource: settings/braincrafted_bootstrap.yml }
@@ -9,8 +10,13 @@ imports:
     # FOS Bundles
     - { resource: fos/fos_user.yml }
 
+    # JMS Configuration
+    - { resource: jms/jms_di_extra.yml }
+    - { resource: jms/jms_security_extra.yml }
+
     # Knp Configurations
-    - { resource: knp/knp_configs.yml }
+    - { resource: knp/knp_menu.yml }
+    - { resource: knp/knp_paginator.yml }
 
     # Sonata Bundles
     - { resource: sonata/sonata_admin.yml }
@@ -20,56 +26,56 @@ imports:
     - { resource: sonata/sonata_user.yml }
 
 framework:
-    #esi:             ~
-    translator:      { fallback: %locale% }
-    secret:          %secret%
+    translator: { fallback: "%locale%" }
+    secret: "%secret%"
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: %kernel.debug%
+        resource: "%kernel.project_dir%/app/config/routing.yml"
+        strict_requirements: ~
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
     templating:
         engines: ["twig"]
-        #assets_version: SomeVer sionScheme
     default_locale:  "%locale%"
-    trusted_proxies: ~
-    session:         ~
-    fragments:       ~
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
     http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
 
 # Twig Configuration
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
 
     base_template_class: Sonata\CacheBundle\Twig\TwigTemplate14
 
-    form:
-        resources:
-            - "SonataCoreBundle:Form:datepicker.html.twig"
+    form_themes:
+        - "SonataCoreBundle:Form:datepicker.html.twig"
 
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
         charset:  UTF8
+        server_version: "%database_server_version%"
         types:
             json: Sonata\Doctrine\Types\JsonType
 
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
-        default_entity_manager: default
-
-        entity_managers:
-            default:
-                auto_mapping: true
-                mappings: ~
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -80,20 +86,3 @@ swiftmailer:
     username:   "%mailer_user%"
     password:   "%mailer_password%"
     spool:     { type: memory }
-
-# JMS Configuration
-jms_di_extra:
-    locations:
-        all_bundles: false
-        directories: ["%kernel.root_dir%/../src"]
-
-    automatic_controller_injections:
-        properties:
-            request: "@request"
-            router: "@router"
-        method_calls:
-            setRouter: ["@router"]
-
-jms_security_extra:
-    secure_all_services: false
-    expressions: true

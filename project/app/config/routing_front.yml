@@ -1,0 +1,53 @@
+# Front-end references.
+#
+# Cross links between kernels.
+app:
+    resource: "@AppBundle/Controller/"
+    type: annotation
+
+stop_impersonating:
+    path: /stop-impersonating
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: admin_sonata_user_user_list
+        permanent: false
+
+#sonata_user_security:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_security_1.xml"
+#    prefix: /{_locale}/admin
+#    requirements:
+#        _locale: "%locales%"
+#    defaults:
+#        _locale: "%locale%"
+
+#sonata_user_resetting:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml"
+#    prefix: /{_locale}/resetting
+#    requirements:
+#        _locale: "%locales%"
+#    defaults:
+#        _locale: "%locale%"
+
+#sonata_user_profile:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_profile_1.xml"
+#    prefix: /{_locale}/profile
+#    requirements:
+#        _locale: "%locales%"
+#    defaults:
+#        _locale: "%locale%"
+
+#sonata_user_register:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_registration_1.xml"
+#    prefix: /{_locale}/register
+#    requirements:
+#        _locale: "%locales%"
+#    defaults:
+#        _locale: "%locale%"
+
+#sonata_user_change_password:
+#    resource: "@SonataUserBundle/Resources/config/routing/sonata_change_password_1.xml"
+#    prefix: /profile
+
+sonata_cache_cache:
+    resource: "@SonataCacheBundle/Resources/config/routing/cache.xml"
+    prefix: /

@@ -1,0 +1,3 @@
+knp_menu:
+    twig:
+        template: "BraincraftedBootstrapBundle:Menu:bootstrap.html.twig"

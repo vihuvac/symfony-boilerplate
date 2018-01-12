@@ -23,32 +23,52 @@ end
 
 
 ### Begin Symfony ###
-function symfony
-    php bin/console $argv
+function sf
+    bin/console $argv
 end
 
-function symfony-symlink
-    symfony assets:install --relative web
+function sf-symlink
+    sf assets:install --relative web
 end
 
-function symfony-assetic-dump
-    symfony assetic:dump --env=dev --no-debug
+function sf-assetic-dump
+    sf assetic:dump --env=dev --no-debug
 end
 
-function symfony-cc
-    symfony cache:clear --env=dev --no-warmup --no-debug
+function sf-cc
+    sf cache:clear --env=dev --no-warmup --no-debug
 end
 
-function symfony-search-routes
-    symfony debug:router
+function sf-search-routes
+    sf debug:router
 end
 
-function symfony-requirements
+function sf-requirements
     php bin/symfony_requirements
 end
 
-function symfony-security-check
-    php bin/security-checker
+function sf-security-check
+    sf security:check
+end
+
+function sf-search-routes
+    sf router:debug | grep $argv
+end
+
+function sf-server-run
+    sf server:run localhost:9090
+end
+
+function sf-schema-update
+    sf doctrine:schema:update --force
+end
+
+function sf-fixtures-load
+    sf doctrine:fixtures:load
+end
+
+function env-sql-dump
+    sf doctrine:schema:update --dump-sql
 end
 ### End Symfony ###
 

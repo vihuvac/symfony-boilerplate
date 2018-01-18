@@ -27,6 +27,14 @@ function sf
     bin/console $argv
 end
 
+function sf-requirements
+    bin/symfony_requirements
+end
+
+function sf-security-checker
+    bin/security-checker
+end
+
 function sf-symlink
     sf assets:install --relative web
 end
@@ -39,20 +47,22 @@ function sf-cc
     sf cache:clear --env=dev --no-warmup --no-debug
 end
 
-function sf-search-routes
-    sf debug:router
+function sf-router-debug
+    switch (count $argv)
+        case 0
+            sf debug:router
+        case 1
+            sf debug:router $argv[1]
+    end
 end
 
-function sf-requirements
-    php bin/symfony_requirements
-end
-
-function sf-security-check
-    sf security:check
-end
-
-function sf-search-routes
-    sf router:debug | grep $argv
+function sf-router-match
+    switch (count $argv)
+        case 0
+            echo Missing URL to perform the match!
+        case 1
+            sf router:match $argv[1]
+    end
 end
 
 function sf-server-run

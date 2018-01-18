@@ -8,18 +8,18 @@ Symfony Boilerplate
 
 #### Symfony Bundles
 
-* Symfony Standard Edition (**v3.3.14** LTS)
+* Symfony Standard Edition (**v3.3.15** LTS)
 * BraincraftedBootstrapBundle
 * CraueFormFlowBundle
 * DoctrineBundle
 * DoctrineMigrationsBundle
+* EntityAuditBundle (Simplethings)
 * FOSUserBundle (Installed by SonataUserBundle)
 * JMSDiExtraBundle
 * JMSSecurityExtraBundle
 * JMSSerializerBundle
 * KnpMenuBundle
 * KnpPaginatorBundle
-* EntityAuditBundle (Simplethings)
 * SonataAdminBundle
 * SonataBlockBundle
 * SonataCacheBundle
@@ -29,6 +29,7 @@ Symfony Boilerplate
 * SonataEasyExtendsBundle
 * SonataIntlBundle
 * SonataUserBundle
+* VihuvacRecaptchaBundle (reCAPTCHA form field for Symfony)
 * Bootstrap
 * Jquery
 
